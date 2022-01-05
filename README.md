@@ -6,8 +6,8 @@ These modules are built using and require the ``box`` package in R. Viewing the 
 ## Contents
 * The ``outputHelpers`` directory contains modules that provide helper functions to creating tables and figures. 
 	- ``msout.R``: Helper functions for creating regression tables with ``modelsummary()``. 
-* The ``modelHelpers`` directory contains modules that provide helper functions to estimating econometric models. These include wrapper functions for iterating over models.
-	- ````
+* The ``regHelpers`` directory contains modules that provide helper functions to estimating econometric models. These include wrapper functions for iterating over models.
+	- ``reghelp.R``: Helper functions for estimating regressions. For example, includes a wrapper for ``feols::feols()`` that creates formulas from strings that facilitates iterating over outome variables. 
 
 ## Use
 To use a module in an R script, you must first set the ``box`` search path with ``options(box.path = 'boxdirectory')``. 
