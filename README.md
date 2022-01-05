@@ -17,6 +17,7 @@ To view the documentation for a function contained in a module, use ``box::help(
 ### Example
 ```
 #install.packages("box")
+#install.packages("roxygen2")
 
 options(box.path = '/users/hackettl/documents/github/r-modules/')
 box::use(outputHelpers/msout)
