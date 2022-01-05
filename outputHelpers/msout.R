@@ -1,6 +1,7 @@
 #' Table helpers for modelsummary()
 #'
-#' The \code{output-helpers/msout} module provides a type for representing DNA sequences.
+#' The \code{outputHelpers/msout} module provides helper functions for creating tables
+#' with modelsummary::modelsummary().
 '.__module__.'
 
 #' Add means row
