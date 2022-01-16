@@ -43,6 +43,10 @@ add_means_row <- function(outcomes, titles, label, df){
 #'  Represents the row numbers of the rows to be added.
 #' @param df dataframe from which means are calculated. This is passed to the
 #'  \code{df} field of \code{add_means_row()}.
+#' @param digits integer the number of digits that the added rows should include.
+#'  Default is 2, and for now all rows have the same formatting. In future
+#'  versions this should be modified so that the input can be an array of 
+#'  integers, customizing the number of decimal places that each row has. 
 #' @return tibble.
 #' @note An example of how to use this in conjunction with modelsummary() is as follows:
 #' 
@@ -50,12 +54,22 @@ add_means_row <- function(outcomes, titles, label, df){
 #' 
 #' add_rows = regouthelpers$add_rows(list(c("Y1", "Y2"), "X"), c("Mean Y", "Mean X"), outcometitles, c(4,5), df))}
 #' @export
-add_rows <- function(rows, labels, titles, positions, df){
+add_rows <- function(rows, labels, titles, positions, df, ndigits=2){
   # create a data from for each outcome list of interest
   rows <- purrr::map2(rows, labels, function(x, y){
     add_means_row(x, titles, y, df)
   })
   rows <- do.call(rbind.data.frame, rows)
+  # format numbers
+  # first make sure numbers are numeric
+  rows <- dplyr::mutate_all(rows, 
+                            function(x){
+                              ifelse(is.na(as.numeric(x)),
+                                     x,
+                                     as.numeric(x))
+                              })
+  # format numbers with commas and set number of digits
+  rows[] <- lapply(rows, formatC, big.mark =",", format = "f", digits = ndigits)
   # add attribute for location in the output table
   attr(rows, 'position') <- positions 
   return(rows)
