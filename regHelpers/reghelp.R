@@ -12,7 +12,8 @@
 #' @param outcome string. Yvariable in the regression
 #' @param xvec vector of strings. Xvariables (excluding FE) in the regression
 #' @param fe vector of strings, FE's to be added.
-#' @return A \code{formula} appropriate for feols
+#' @return A \code{formula} appropriate for feols. This will look like:\cr\cr
+#' outcome ~ xvec | fe
 #' @export
 feols_formulator <- function(outcome, xvec, fe){
   formula <- outcome
@@ -39,7 +40,11 @@ feols_formulator <- function(outcome, xvec, fe){
 #' never treated group.
 #' @param sunab = FALSE: A boolean for whether the Sun and Abrahan (2020) estimator
 #' should be calculated instead of a traditional event study.
-#' @return A \code{formula} appropriate for feols
+#' @return A \code{formula} appropriate for feols. For a traditional event study,
+#' This will look like:\cr\cr
+#' outcome ~ i(eventvars, ref = ref) + xvec | fe \cr\cr
+#' For Sun and Abraham (2020): \cr\cr
+#' outcome ~ sunab(eventvars) + xvec | fe
 #' @export
 eventstudy_formulator <- function(outcome, eventvars, xvec, fe, ref=c(-1), sunab=F){
   formula <- outcome
