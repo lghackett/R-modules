@@ -48,16 +48,23 @@ feols_formulator <- function(outcome, xvec, fe){
 #' @export
 eventstudy_formulator <- function(outcome, eventvars, xvec, fe, ref=c(-1), sunab=F){
   formula <- outcome
+  
+  if(is.null(xvec)){
+    x_string <- ""
+  }else{
+    x_string <- paste(' + ', xvec, collapse = ' + ')
+  }
+  
   if(sunab){
     formula <- paste(formula, ' ~ sunab(',
-                     paste(eventvars, collapse = ', '), ') + ',
-                     paste(xvec, collapse = ' + '), '|',
+                     paste(eventvars, collapse = ', '), ')',
+                     x_string, '|',
                      paste(fe, collapse = ' + '))    
   }else{
     formula <- paste(formula, '~ i(',
                      paste(eventvars, collapse = ' , '), ', ref = c(',
-                     paste(ref, collapse = ' , '), ')) + ',
-                     paste(xvec, collapse = ' + '), '|',
+                     paste(ref, collapse = ' , '), '))',
+                     x_string, '|',
                      paste(fe, collapse = ' + '))   
   }
   return(stats::as.formula(formula))
