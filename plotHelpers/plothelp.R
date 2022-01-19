@@ -28,6 +28,10 @@ draw_event_graph <- function(model, xlab='Event time', ylab=NULL, title='', alph
                            sep = "::", 
                            into = c("var", 'eventtime'))
   model <- dplyr::mutate(model, eventtime = as.numeric(eventtime))
+  # set to na any estimates with an unreasonable variance
+  model <- dplyr::mutate(model, 
+                         estimate = ifelse(std.error > 100*estimate, NaN, estimate),
+                         std.error = ifelse(std.error > 100*estimate, NaN, std.error))
   # fill in any uncalculated coefficients
   eventtime <- min(model$eventtime):max(model$eventtime)
   range <- tibble::tibble(eventtime)
