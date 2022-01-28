@@ -25,8 +25,8 @@ draw_event_graph <- function(model, xlab='Event time', ylab=NULL, title='', alph
   # get event time as its own numeric column
   model <- tidyr::separate(model, 
                            term, 
-                           sep = "::", 
-                           into = c("var", 'eventtime'))
+                           sep = "::|:", 
+                           into = c("var", 'eventtime', NA))
   model <- dplyr::mutate(model, eventtime = as.numeric(eventtime))
   # set to na any estimates with an unreasonable variance
   model <- dplyr::mutate(model, 
