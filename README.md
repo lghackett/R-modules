@@ -5,6 +5,9 @@ These modules are built using and require the ``box`` package in R. Viewing the 
 
 For a demonstration of some of the funcionality, see ``demo.R``. 
 
+## Warnings
+This code is very much a work in progress, and is intended for personal use!! As such, it has not been tested on every OS or for every use case. I welcome feedback and improvements, but if you are interested in using it the safest way is to use it as inspiration for your own, locally developed and maintained code.
+
 ## Contents
 * The ``outputHelpers`` directory contains modules that provide helper functions to creating tables and figures. 
 	- ``msout.R``: Helper functions for creating regression tables with ``modelsummary()``. 
