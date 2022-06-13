@@ -70,7 +70,25 @@ add_rows <- function(rows, labels, titles, positions, df, ndigits=2){
                               })
   # format numbers with commas and set number of digits
   rows[] <- lapply(rows, formatC, big.mark =",", format = "f", digits = ndigits)
+  colnames(rows) = c("term", titles)
   # add attribute for location in the output table
   attr(rows, 'position') <- positions 
   return(rows)
+}
+
+#' Strip float
+#' 
+#' Strips the float environment from tables so they can be imported into latex
+#' as fragments; similar to Stata's fragment option
+#' @param table A large string, usually LATEX output from modelsummary()
+#' @return A large string, latex code of a table.
+#' @note The resulting string should be written to tex using something like:
+#' \code{kableExtra::save_kable(paste0(outdir, 'regs.tex'))}
+#' @export
+strip_table <- function(table){
+  # replace the \begin{table}, \end{table} stuff with ''
+  tabout <- gsub('[\\\\]+begin[{]table[}]\\[H\\]\n[\\\\]+centering|[\\\\]+end[{]table[}]',
+                 '', table, perl=TRUE)
+  #match <- stringr::str_extract(string = tab, pattern = '[\\\\]+toprule((?s).*)[\\\\]+bottomrule') 
+  return(tabout)
 }
