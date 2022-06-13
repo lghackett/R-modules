@@ -16,6 +16,9 @@ USSeatBelts = USSeatBelts %>%
   mutate(primary = ifelse(enforce == "primary", 1, 0),
          fatalities_millions = fatalities*1e6)
 
+# double data to illustrate N formatting later
+seatbelts = rbind(USSeatBelts, USSeatBelts)
+
 ## FEs model -----------------------
 # define a set of models
 baseX <- c("primary", "miles", "drinkage", "alcohol")
@@ -31,7 +34,7 @@ regs <- lapply(Xvars, function(x){ # loop over X vars
                                  x, # iterator var
                                  c("state", "year")), # FEs
         cluster = ~factor(state), # clustering
-        data = USSeatBelts) # data
+        data = seatbelts) # data
 }) %>% setNames(colnames) # set names
 
 ## Create table -----------------------
@@ -43,16 +46,19 @@ options(modelsummary_format_numeric_latex = "mathmode")
 glance_custom.fixest <- function(x, ...) {
   dv <- insight::find_response(x)
   dat <- insight::get_data(x)
-  out <- data.frame("Mean Y" = mean(dat[[dv]]), check.names = FALSE)
-  out <- format(round(out, 2), big.mark=",") # format
+  out <- data.frame("Mean Y" = mean(dat[[dv]]),
+                    check.names = FALSE)
+  out <-  # format
   return(out)
 }
 
 # format statistics from the table
-gm <- tibble::tribble(
-  ~raw,        ~clean,          ~fmt,
-  "nobs",      "N",             0,
-  "Mean Y",    "Mean Y",        2
+f0 <- function(x) format(round(x, 0), big.mark=",")
+f2 <- function(x) format(round(x, 3), big.mark=",")
+
+gm <- list(
+  list("raw" = "nobs", "clean" = "N", "fmt" = f0),
+  list("raw" = "Mean Y", "clean" = "Mean Y", "fmt" = f2)
 )
 
 # create table
