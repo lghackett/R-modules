@@ -62,12 +62,25 @@ modelsummary(regs, stars = T,
 
 # LaTeX version of the table, stripped of float environment
 msout$strip_table(
-  modelsummary(regs, stars = T,
+  modelsummary(regs, stars = T, escape=F,
              output = "latex",
              coef_rename = c("primary" = "Primary seatbelt laws"),
              coef_omit = "[^primary]",
              fmt = function(x) format(round(x, 0), big.mark=","),
              gof_map = gm)
+)
+
+# Dealing with special chars -----------------------------
+# new names just for kicks
+newnames <- c("$\\Delta$", "\\%")
+regs <- regs %>% setNames(newnames)
+msout$strip_table(
+  modelsummary(regs, stars = T, escape=F, # escape = F to keep latex
+               output = "latex",
+               coef_rename = c("primary" = "Primary seatbelt laws"),
+               coef_omit = "[^primary]",
+               fmt = function(x) format(round(x, 0), big.mark=","),
+               gof_map = gm)
 )
 
 
