@@ -15,11 +15,16 @@
 #' @return A \code{formula} appropriate for feols. This will look like:\cr\cr
 #' outcome ~ xvec | fe
 #' @export
-feols_formulator <- function(outcome, xvec, fe){
+feols_formulator <- function(outcome, xvec, fe=NULL){
   formula <- outcome
-  formula <- paste(formula, '~', 
-                   paste(xvec, collapse = ' + '), '|',
-                   paste(fe, collapse = ' + '))
+  if(is.null(fe)){
+    formula <- paste(formula, '~', 
+                     paste(xvec, collapse = ' + '))  
+  }else{
+    formula <- paste(formula, '~', 
+                     paste(xvec, collapse = ' + '), '|',
+                     paste(fe, collapse = ' + '))
+  }
   return(stats::as.formula(formula))
 }
 
