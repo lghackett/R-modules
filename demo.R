@@ -38,6 +38,8 @@ regs <- lapply(Xvars, function(x){ # loop over X vars
 options(modelsummary_format_numeric_latex = "mathmode")
 
 # add dependent variable mean to stats
+# Inspired by Vincent's suggestion on StackOverflow:
+# https://stackoverflow.com/questions/71882957/compute-and-display-mean-of-dependent-variable-in-modelsummary-output-tables-in
 glance_custom.fixest <- function(x, ...) {
   dv <- insight::find_response(x)
   dat <- insight::get_data(x)
@@ -74,6 +76,7 @@ msout$strip_table(
 # new names just for kicks
 newnames <- c("$\\Delta$", "\\%")
 regs <- regs %>% setNames(newnames)
+
 msout$strip_table(
   modelsummary(regs, stars = T, escape=F, # escape = F to keep latex
                output = "latex",
