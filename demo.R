@@ -63,14 +63,17 @@ modelsummary(regs, stars = T,
              gof_map = gm)
 
 # LaTeX version of the table, stripped of float environment
-msout$strip_table(
+(tab = msout$strip_table(
   modelsummary(regs, stars = T, escape=F,
              output = "latex",
              coef_rename = c("primary" = "Primary seatbelt laws"),
              coef_omit = "[^primary]",
              fmt = function(x) format(round(x, 0), big.mark=","),
              gof_map = gm)
-)
+))
+
+# saving
+# tab %>% kableExtra::save_kable("example.tex")
 
 # Dealing with special chars -----------------------------
 # new names just for kicks
