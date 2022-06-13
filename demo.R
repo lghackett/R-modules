@@ -48,24 +48,24 @@ glance_custom.fixest <- function(x, ...) {
   dat <- insight::get_data(x)
   out <- data.frame("Mean Y" = mean(dat[[dv]]),
                     check.names = FALSE)
-  out <-  # format
   return(out)
 }
 
 # format statistics from the table
 f0 <- function(x) format(round(x, 0), big.mark=",")
-f2 <- function(x) format(round(x, 3), big.mark=",")
+f2 <- function(x) format(round(x, 2), big.mark=",")
 
 gm <- list(
   list("raw" = "nobs", "clean" = "N", "fmt" = f0),
-  list("raw" = "Mean Y", "clean" = "Mean Y", "fmt" = f2)
+  list("raw" = "Mean Y", "clean" = "Mean Y", "fmt" = f2),
+  list("raw" = "FE: year", "clean" = "Year FE", "fmt" = NA)
 )
 
 # create table
 modelsummary(regs, stars = T,
              coef_rename = c("primary" = "Primary seatbelt laws"),
              coef_omit = "[^primary]",
-             fmt = function(x) format(round(x, 2), big.mark=","),
+             fmt = function(x) format(round(x, 3), big.mark=","),
              gof_map = gm)
 
 # LaTeX version of the table, stripped of float environment
