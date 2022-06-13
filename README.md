@@ -3,6 +3,8 @@ Collection of modules for use in R.
 
 These modules are built using and require the ``box`` package in R. Viewing the module documentations additionally require the ``roxygen2`` package. 
 
+For a demonstration of some of the funcionality, see ``demo.R``. 
+
 ## Contents
 * The ``outputHelpers`` directory contains modules that provide helper functions to creating tables and figures. 
 	- ``msout.R``: Helper functions for creating regression tables with ``modelsummary()``. 
